@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Live Wallpaper</title>
+    <style>
+        @font-face {
+            font-family: 'TanNimbus';
+            src: url('TAN-NIMBUS.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * { margin: 0; padding: 0; overflow: hidden; }
+        body { background: black; color: white; font-family: 'TanNimbus', sans-serif; text-align: center; }
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+        }
+        #clock {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10em; /* 2x larger */
+            font-weight: bold;
+            color: #ffeca3; /* Updated font color */
+        }
+    </style>
+</head>
+<body>
+    <video id="video-background" autoplay loop muted>
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div id="clock"></div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            hours = hours % 12; // Convert to 12-hour format
+            hours = hours ? String(hours).padStart(2, '0') : '12'; // Display 12 instead of 0
+            document.getElementById("clock").textContent = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
